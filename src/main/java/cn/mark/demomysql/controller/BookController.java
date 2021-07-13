@@ -41,7 +41,9 @@ public class BookController {
         System.out.println("结束了.......");
         System.out.println("debug调式.....");
         System.out.println("怎么怎么快了快来了有点.....");
-        System.out.println("调教查看分支");
+        System.out.println("调教查看分支.........");
+        System.out.println("再次查看分支合并..........");
+
         return bookService.listBookAge(age);
     }
 
