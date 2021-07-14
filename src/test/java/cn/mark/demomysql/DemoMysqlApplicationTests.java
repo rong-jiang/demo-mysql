@@ -49,11 +49,15 @@ class DemoMysqlApplicationTests {
         book.setName("张三");
         book.setAge(10);
         book.setSetb("nan");
-
+	    
+        System.out.println("第一个集合数据："+book);
+	    
         Book book1 = new Book();
         book1.setName("李四");
         book1.setAge(5);
         book1.setSetb("nan");
+	
+	System.out.println("第二个集合数据："+book1);    
 
         List<Book> list = new ArrayList();
         list.add(book);
