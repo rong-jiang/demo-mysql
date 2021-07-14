@@ -57,7 +57,7 @@ class DemoMysqlApplicationTests {
         book1.setAge(5);
         book1.setSetb("nan");
 	
-	System.out.println("第二个集合数据："+book1);    
+		System.out.println("第二个集合数据："+book1);
 
         List<Book> list = new ArrayList();
         list.add(book);
