@@ -72,7 +72,7 @@
         <!--&lt;!&ndash; <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> &ndash;&gt;-->
         <!--</table>-->
 
-        <table schema="" tableName="t_book" domainObjectName="Book"
+        <table schema="" tableName="t_dept" domainObjectName="Dept"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false">
             <!-- 忽略列，不生成bean 字段 -->

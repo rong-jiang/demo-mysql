@@ -9,7 +9,7 @@ import java.util.List;
 public interface BookService {
     int insert(Book record);
 
-    List<Book> insertSelective(List<Book> record);
+    Integer insertSelective(List<Book> record);
 
     Book queryList(int id);
 

@@ -22,12 +22,11 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public List<Book> insertSelective(List<Book> record) {
+    public Integer insertSelective(List<Book> record) {
         for (Book book : record) {
-            book.setAge(30);
             bookMapper.insertSelective(book);
         }
-        return record;
+        return 1;
     }
 
     @Cacheable(cacheNames = "bookRedis",key = "'t_book_'+#id")
@@ -49,7 +48,7 @@ public class BookServiceImpl  implements BookService {
 
     @Override
 //    ,condition = "'select * from t_book where id ='+#id+'and age ='+#age"
-    @Cacheable(value = "bookRedisAge")
+//    @Cacheable(value = "bookRedisAge")
     public List<Book> listBookAge(int age) {
         Book book=new Book();
         book.setAge(age);

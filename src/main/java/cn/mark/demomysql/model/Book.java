@@ -1,19 +1,22 @@
 package cn.mark.demomysql.model;
-
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
-
 import java.io.Serializable;
-import java.util.Objects;
-
 @Data
 //@TableName("t_book")
 public class Book implements Serializable{
     private Integer id;
 
+    @ExcelProperty(value = "姓名")
+    @ExcelField(title = "名字")
     private String name;
 
+    @ExcelField(title = "性别")
+    @ExcelProperty(value = "性别")
     private String setb;
 
+    @ExcelField(title = "年龄")
+    @ExcelProperty(value = "年龄")
     private Integer age;
 
 

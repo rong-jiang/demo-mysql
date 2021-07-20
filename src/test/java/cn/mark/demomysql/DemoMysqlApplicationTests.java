@@ -42,7 +42,6 @@ class DemoMysqlApplicationTests {
 
 	}
 
-
 	@Test
     void testPost() {
         Book book = new Book();
@@ -63,14 +62,16 @@ class DemoMysqlApplicationTests {
         list.add(book);
         list.add(book1);
 
-        Map<String, List<Book>> map = new HashMap<>();
-        map.put("data", list);
+        Map<String, Book> map = new HashMap<>();
+//        map.put("data", list);
 
-//		list.forEach(lists->{
-//			System.out.println(lists);
-//			map.put("data", lists);
-//
-//		});
+		list.forEach(lists->{
+			System.out.println(lists);
+			map.put("data", lists);
+
+		});
+
+		System.out.println("输出map数据:"+map);
 
 
     }
