@@ -35,7 +35,7 @@ public class UserController {
     }
 
     /***
-     * 将钉钉上部门信息-->t_user用户表
+     * 将钉钉上部门信息-->t_user用户表..
      * @return
      */
     @RequestMapping("/addUser")
