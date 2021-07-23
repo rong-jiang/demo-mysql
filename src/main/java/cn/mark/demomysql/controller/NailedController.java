@@ -3,10 +3,12 @@ package cn.mark.demomysql.controller;
 import cn.mark.demomysql.mapper.DeptMapper;
 import cn.mark.demomysql.model.Dept;
 import cn.mark.demomysql.ulit.LocalCacheClient;
+import com.alibaba.druid.util.StringUtils;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.*;
 import com.dingtalk.api.response.*;
+import com.google.common.collect.Lists;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,14 @@ public class NailedController   {
 
     private final static Long AGENTID = 0L;
 
-    public final static String LEAVE_PROCESS_CODE = "PROC-70A9A9C2-BF877C09E3FE";
-    public final static String PUBLIC_PROCESS_CODE = "PROC-C6B6F367-BE545F51D9E0";
-    public final static String TRAVELWORK_PROCESS_CODE = "PROC-8763D6A9-A788E7CEC119";
-    public final static String TRANSFER_PROCESS_CODE = "PROC-E05FD7DE-5A2B9D7CD6AC";
+    //请假
+    public final static String LEAVE_PROCESS_CODE = "PROC-A762FCC5-DB30-44A2-BABF-3AFBF432A58E";
+    //外出
+    public final static String PUBLIC_PROCESS_CODE = "PROC-060C3355-6256-417F-AD4B-C10DCC73349D";
+    //出差
+    public final static String TRAVELWORK_PROCESS_CODE = "PROC-5E074F96-7C9F-4B12-A7C5-D83C6CAA5C8B";
+    //调岗
+    public final static String TRANSFER_PROCESS_CODE = "PROC-C3EA16BA-C395-44FE-B35F-A412C0167E19";
 
 
     @Autowired
@@ -87,7 +93,7 @@ public class NailedController   {
         return null;
     }
 
-    //获取部门下的所有用户列表
+    //获取部门下的所有用户列表(不推荐)
     @RequestMapping("/getDepartmentUserId")
     public static List<String> getDepartmentUserId(Long departmentId){
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/user/listid");
@@ -162,7 +168,7 @@ public class NailedController   {
 
     //获取审批实例ID列表
     @RequestMapping("/getProcessinstanceListid")
-    public static OapiProcessinstanceListidsResponse.PageResult getProcessinstanceListid(String processCode, Long startTime, Long endTime, long cursor, long size) {
+    public static OapiProcessinstanceListidsResponse.PageResult getProcessinstanceListid(String processCode, Long startTime, Long endTime, long cursor, long size,String userIdList) {
         try {
             DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/processinstance/listids");
             OapiProcessinstanceListidsRequest request = new OapiProcessinstanceListidsRequest();
@@ -173,6 +179,9 @@ public class NailedController   {
             }
             request.setSize(size);
             request.setCursor(cursor);
+            if (userIdList != null || !"".equals(userIdList)){
+                request.setUseridList(userIdList);
+            }
             OapiProcessinstanceListidsResponse response = client.execute(request, NailedController.getToken());
             if(!response.isSuccess()) {
                 log.error("调用钉钉接口失败："+response.getMessage());
@@ -226,8 +235,8 @@ public class NailedController   {
     }*/
 
     public static void main(String[] args) {
-        List<OapiV2UserListResponse.ListUserResponse> userList = new ArrayList();
-        OapiV2UserListResponse.PageResult userPageResult = NailedController.getDepartmentUser(90623955L, 1L, 50L);
+//        List<OapiV2UserListResponse.ListUserResponse> userList = new ArrayList();
+//        OapiV2UserListResponse.PageResult userPageResult = NailedController.getDepartmentUser(90623955L, 1L, 50L);
 //        List<String> departmentUserId = NailedController.getDepartmentUserId(90623955L);
 //        long cursor = 0L;
 //        long size = 50L;
@@ -239,8 +248,29 @@ public class NailedController   {
 //        if(userPageResult != null && userPageResult.getList() != null && userPageResult.getList().size() > 0) {
 //            userList.addAll(userPageResult.getList());
 //        }
-        for (OapiV2UserListResponse.ListUserResponse listUserResponse : userPageResult.getList()) {
-            System.out.println(listUserResponse.getName());
+//        for (OapiV2UserListResponse.ListUserResponse listUserResponse : userPageResult.getList()) {
+//            System.out.println(listUserResponse.getName());
+//        }
+
+        List<OapiV2DepartmentListsubResponse.DeptBaseResponse> departmentList = NailedController.getDepartment();
+        if(departmentList != null && departmentList.size() > 0) {
+            List<String> userIdList = new ArrayList<>();
+            for (OapiV2DepartmentListsubResponse.DeptBaseResponse department : departmentList) {
+                List<String> userIdListTmp = NailedController.getDepartmentUserId(department.getDeptId());
+                if (userIdListTmp != null && userIdListTmp.size() > 0) {
+                    userIdList.addAll(userIdListTmp);
+                }
+            }
+
+            for (String s : userIdList) {
+                System.out.println(s);
+            }
+            log.info("打印输出数据:{}",userIdList.size());
+            //按指定长度进行切分
+            List<List<String>> userIds = Lists.partition(userIdList, 50);
+            for (List<String> userId : userIds) {
+                System.out.println("加工后数据"+userId);
+            }
         }
 
     }

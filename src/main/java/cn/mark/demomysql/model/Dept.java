@@ -5,6 +5,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
+/**
+ * 部门表
+ */
 public class Dept {
     private Integer id;
 

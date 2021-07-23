@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mark.demomysql.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.mark.demomysql.model.User">
+        <constructor>
+            <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="union_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="state_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="mobile" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="hide_mobile" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="telephone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="job_number" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="org_email" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="work_place" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="dept_id_list" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="extension" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="admin" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="boss" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="leader" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="hired_date" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="exclusive_account" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="login_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="exclusive_account_type" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <insert id="insert" parameterType="cn.mark.demomysql.model.User">
+        insert into t_user (id, user_id, union_id,
+                            name, avatar, state_code,
+                            mobile, hide_mobile, telephone,
+                            job_number, title, email,
+                            org_email, work_place, remark,
+                            dept_id_list, extension, admin,
+                            boss, leader, hired_date,
+                            exclusive_account, login_id, exclusive_account_type,
+                            update_time)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{stateCode,jdbcType=VARCHAR},
+                #{mobile,jdbcType=VARCHAR}, #{hideMobile,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
+                #{jobNumber,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+                #{orgEmail,jdbcType=VARCHAR}, #{workPlace,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+                #{deptIdList,jdbcType=VARCHAR}, #{extension,jdbcType=VARCHAR}, #{admin,jdbcType=VARCHAR},
+                #{boss,jdbcType=VARCHAR}, #{leader,jdbcType=VARCHAR}, #{hiredDate,jdbcType=TIMESTAMP},
+                #{exclusiveAccount,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR},
+                #{exclusiveAccountType,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.mark.demomysql.model.User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="stateCode != null">
+                state_code,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="hideMobile != null">
+                hide_mobile,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="jobNumber != null">
+                job_number,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="orgEmail != null">
+                org_email,
+            </if>
+            <if test="workPlace != null">
+                work_place,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="deptIdList != null">
+                dept_id_list,
+            </if>
+            <if test="extension != null">
+                extension,
+            </if>
+            <if test="admin != null">
+                admin,
+            </if>
+            <if test="boss != null">
+                boss,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="hiredDate != null">
+                hired_date,
+            </if>
+            <if test="exclusiveAccount != null">
+                exclusive_account,
+            </if>
+            <if test="loginId != null">
+                login_id,
+            </if>
+            <if test="exclusiveAccountType != null">
+                exclusive_account_type,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="stateCode != null">
+                #{stateCode,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="hideMobile != null">
+                #{hideMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="jobNumber != null">
+                #{jobNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="orgEmail != null">
+                #{orgEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="workPlace != null">
+                #{workPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deptIdList != null">
+                #{deptIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="extension != null">
+                #{extension,jdbcType=VARCHAR},
+            </if>
+            <if test="admin != null">
+                #{admin,jdbcType=VARCHAR},
+            </if>
+            <if test="boss != null">
+                #{boss,jdbcType=VARCHAR},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredDate != null">
+                #{hiredDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="exclusiveAccount != null">
+                #{exclusiveAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="loginId != null">
+                #{loginId,jdbcType=VARCHAR},
+            </if>
+            <if test="exclusiveAccountType != null">
+                #{exclusiveAccountType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateUserId" parameterType="cn.mark.demomysql.model.User">
+        update t_user
+        <set>
+                <if test="id != null">
+                    id=#{id,jdbcType=BIGINT},
+                </if>
+                <if test="userId != null">
+                    user_id=#{userId,jdbcType=VARCHAR},
+                </if>
+                <if test="unionId != null">
+                    union_id=#{unionId,jdbcType=VARCHAR},
+                </if>
+                <if test="name != null">
+                    name=#{name,jdbcType=VARCHAR},
+                </if>
+                <if test="avatar != null">
+                    avatar=#{avatar,jdbcType=VARCHAR},
+                </if>
+                <if test="stateCode != null">
+                    state_code=#{stateCode,jdbcType=VARCHAR},
+                </if>
+                <if test="mobile != null">
+                    mobile=#{mobile,jdbcType=VARCHAR},
+                </if>
+                <if test="hideMobile != null">
+                    hide_mobile=#{hideMobile,jdbcType=VARCHAR},
+                </if>
+                <if test="telephone != null">
+                    telephone=#{telephone,jdbcType=VARCHAR},
+                </if>
+                <if test="jobNumber != null">
+                    job_number=#{jobNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="title != null">
+                    title=#{title,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null">
+                    email=#{email,jdbcType=VARCHAR},
+                </if>
+                <if test="orgEmail != null">
+                    org_email=#{orgEmail,jdbcType=VARCHAR},
+                </if>
+                <if test="workPlace != null">
+                    work_place=#{workPlace,jdbcType=VARCHAR},
+                </if>
+                <if test="remark != null">
+                    remark=#{remark,jdbcType=VARCHAR},
+                </if>
+                <if test="deptIdList != null">
+                    dept_id_list=#{deptIdList,jdbcType=VARCHAR},
+                </if>
+                <if test="extension != null">
+                    extension=#{extension,jdbcType=VARCHAR},
+                </if>
+                <if test="admin != null">
+                    admin=#{admin,jdbcType=VARCHAR},
+                </if>
+                <if test="boss != null">
+                    boss=#{boss,jdbcType=VARCHAR},
+                </if>
+                <if test="leader != null">
+                    leader=#{leader,jdbcType=VARCHAR},
+                </if>
+                <if test="hiredDate != null">
+                    hired_date=#{hiredDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="exclusiveAccount != null">
+                    exclusive_account=#{exclusiveAccount,jdbcType=VARCHAR},
+                </if>
+                <if test="loginId != null">
+                    login_id=#{loginId,jdbcType=VARCHAR},
+                </if>
+                <if test="exclusiveAccountType != null">
+                    exclusive_account_type=#{exclusiveAccountType,jdbcType=VARCHAR},
+                </if>
+                <if test="updateTime != null">
+                    update_time=#{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where user_id=#{userId,jdbcType=VARCHAR}
+
+    </update>
+    <select id="queryAllUser" resultType="cn.mark.demomysql.model.User">
+        select *
+        from t_user
+    </select>
+    <select id="queryByUserId" resultType="cn.mark.demomysql.model.User">
+        select *
+        from t_user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+</mapper>
