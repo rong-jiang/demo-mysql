@@ -42,31 +42,36 @@ class DemoMysqlApplicationTests {
 
 	}
 
-
 	@Test
     void testPost() {
         Book book = new Book();
         book.setName("张三");
         book.setAge(10);
         book.setSetb("nan");
-
+	    
+        System.out.println("第一个集合数据："+book);
+	    
         Book book1 = new Book();
         book1.setName("李四");
         book1.setAge(5);
         book1.setSetb("nan");
+	
+		System.out.println("第二个集合数据："+book1);
 
         List<Book> list = new ArrayList();
         list.add(book);
         list.add(book1);
 
-        Map<String, List<Book>> map = new HashMap<>();
-        map.put("data", list);
+        Map<String, Book> map = new HashMap<>();
+//        map.put("data", list);
 
-//		list.forEach(lists->{
-//			System.out.println(lists);
-//			map.put("data", lists);
-//
-//		});
+		list.forEach(lists->{
+			System.out.println(lists);
+			map.put("data", lists);
+
+		});
+
+		System.out.println("输出map数据:"+map);
 
 
     }

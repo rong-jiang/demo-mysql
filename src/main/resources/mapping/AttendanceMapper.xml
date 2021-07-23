@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mark.demomysql.mapper.AttendanceMapper" >
+  <resultMap id="BaseResultMap" type="cn.mark.demomysql.model.Attendance" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="attendance_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="source_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="base_check_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_check_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="proc_inst_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="approve_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="location_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="time_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="check_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="work_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="record_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="plan_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="group_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.mark.demomysql.model.Attendance" >
+    insert into t_attendance (id, attendance_id, source_type, 
+      base_check_time, user_check_time, proc_inst_id,
+      approve_id, location_result, time_result, 
+      check_type, user_id, work_date, 
+      record_id, plan_id, group_id, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{attendanceId,jdbcType=BIGINT}, #{sourceType,jdbcType=VARCHAR}, 
+      #{baseCheckTime,jdbcType=TIMESTAMP}, #{userCheckTime,jdbcType=TIMESTAMP}, #{procInstId,jdbcType=VARCHAR},
+      #{approveId,jdbcType=BIGINT}, #{locationResult,jdbcType=VARCHAR}, #{timeResult,jdbcType=VARCHAR}, 
+      #{checkType,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{workDate,jdbcType=TIMESTAMP}, 
+      #{recordId,jdbcType=BIGINT}, #{planId,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.mark.demomysql.model.Attendance" >
+    insert into t_attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attendanceId != null" >
+        attendance_id,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="baseCheckTime != null" >
+        base_check_time,
+      </if>
+      <if test="userCheckTime != null" >
+        user_check_time,
+      </if>
+      <if test="procInstId != null" >
+        proc_inst_id,
+      </if>
+      <if test="approveId != null" >
+        approve_id,
+      </if>
+      <if test="locationResult != null" >
+        location_result,
+      </if>
+      <if test="timeResult != null" >
+        time_result,
+      </if>
+      <if test="checkType != null" >
+        check_type,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="workDate != null" >
+        work_date,
+      </if>
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attendanceId != null" >
+        #{attendanceId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="baseCheckTime != null" >
+        #{baseCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCheckTime != null" >
+        #{userCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="procInstId != null" >
+        #{procInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="approveId != null" >
+        #{approveId,jdbcType=BIGINT},
+      </if>
+      <if test="locationResult != null" >
+        #{locationResult,jdbcType=VARCHAR},
+      </if>
+      <if test="timeResult != null" >
+        #{timeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkType != null" >
+        #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null" >
+        #{workDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
