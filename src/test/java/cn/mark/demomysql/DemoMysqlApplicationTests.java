@@ -63,7 +63,6 @@ class DemoMysqlApplicationTests {
         map.put("data", list);
 
 //		list.forEach(lists->{
-//			System.out.println(lists);
 //			map.put("data", lists);
 //
 //		});
