@@ -18,7 +18,7 @@ public class BookServiceImpl  implements BookService {
 
     @Override
     public int insert(Book record) {
-        return 0;
+        return bookMapper.insert(record);
     }
 
     @Override

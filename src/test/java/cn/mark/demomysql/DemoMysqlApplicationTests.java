@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 class DemoMysqlApplicationTests {
 
 	@Test

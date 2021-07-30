@@ -8,9 +8,11 @@ import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.response.OapiV2DepartmentListsubResponse;
 import com.dingtalk.api.response.OapiV2UserListResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
             if (department != null && department.size() > 0) {
                 department.forEach(dept -> {
                     long cursor = 0L;
-                    long size = 50L;
+                    long size = 10L;
                     OapiV2UserListResponse.PageResult departmentUser = NailedController.getDepartmentUser(dept.getDeptId(), cursor, size);
                     //分页查询的游标(cursor)，最开始传0，后续传返回参数中的next_cursor值。
                     //条件循环
@@ -56,9 +58,13 @@ public class UserServiceImpl implements UserService {
                 });
 
                 if (userList != null && userList.size() > 0) {
+                    //不管有没有 先删除
+                    userMapper.deleteByIdAll();
                     userList.forEach(user -> {
-                        User user2 = userMapper.queryByUserIds(user.getUserid());
+                        //User user2 = userMapper.queryByUserIds(user.getUserid());
                         User user1 = new User();
+                        //将user对象中的数据赋个user1
+                        /*BeanUtils.copyProperties(user,user1);*/
                         user1.setUserId(user.getUserid());
                         user1.setUnionId(user.getUnionid());
                         user1.setName(user.getName());
@@ -85,11 +91,12 @@ public class UserServiceImpl implements UserService {
                         user1.setExclusiveAccount(user.getExclusiveAccount() ? "true" : "false");
                         user1.setLoginId(user.getLoginId());
                         user1.setUpdateTime(now);
-                        if (user2 !=null){
+                        /*if (user2 !=null){
                             userMapper.updateUserId(user1);
                         }else{
                             userMapper.insertSelective(user1);
-                        }
+                        }*/
+                        userMapper.insertSelective(user1);
                     });
                     return 1;
                 }

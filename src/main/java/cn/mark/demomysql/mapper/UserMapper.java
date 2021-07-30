@@ -39,4 +39,10 @@ public interface UserMapper {
      * @returns
      */
     int updateUserId(User user);
+
+    /**
+     * 删除全部user数据
+     * @return
+     */
+    int deleteByIdAll();
 }

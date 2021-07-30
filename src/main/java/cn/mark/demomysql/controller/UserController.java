@@ -2,10 +2,13 @@ package cn.mark.demomysql.controller;
 
 import cn.mark.demomysql.service.UserService;
 import com.taobao.api.internal.mapping.ApiField;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@RestController
 @Slf4j
+@Api(description = "获取钉钉用户接口")
+@RequestMapping("/xboot/nailed/user")
+@RestController
+@Transactional
 public class UserController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -23,6 +29,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/getUsers",method = RequestMethod.GET)
+    @ApiOperation(value = "获取用户数据")
     @ResponseBody
     /*
      * List 里的对象是Map对象，而Map对象是
@@ -35,10 +42,11 @@ public class UserController {
     }
 
     /***
-     * 将钉钉上部门信息-->t_user用户表..
+     * 将钉钉上用户信息-->t_user用户表..
      * @return
      */
-    @RequestMapping("/addUser")
+    @RequestMapping(value = "/addUser",method = RequestMethod.POST)
+    @ApiOperation(value = "将钉钉上用户信息")
     public int addUser(){
         return userService.insertSelective();
     }
