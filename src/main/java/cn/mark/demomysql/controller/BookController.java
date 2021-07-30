@@ -5,6 +5,8 @@ import cn.mark.demomysql.service.BookService;
 import cn.mark.demomysql.ulit.UploadSendListener;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jxls.exception.ParsePropertyException;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -34,18 +37,36 @@ import java.util.*;
 
 @RestController
 @Slf4j
+@Api(description = "book查询导出导入")
+@RequestMapping("/xboot/book")
 public class BookController {
     @Autowired
     private BookService bookService;
 
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value = "测试")
     public String sayHello() {
         return "Hello, World!";
     }
 
+    @RequestMapping(value = "/addBook", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "添加")
+    public String addBook(Book book){
+        int insert = bookService.insert(book);
+        if (insert>0){
+            return "添加成功";
+        }else{
+            return "添加失败";
+        }
+    }
+
+
     @RequestMapping(value = "/queryBook", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value = "根据id查询")
     public Book queryBook(@RequestParam("id") int id) {
 //        Book book=new Book();
 //        book.setId(1);
@@ -54,11 +75,14 @@ public class BookController {
 
     @RequestMapping(value = "/queryList", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value = "条件查询")
     public List<Book> queryList(@RequestParam("id") int id, @RequestParam("age") int age) throws Exception {
         return bookService.listBook(id, age);
     }
 
+
     @RequestMapping(value = "/queryListAge", method = RequestMethod.GET)
+    @ApiOperation(value = "测试条件查询")
     public List<Book> queryListAge( @RequestParam(value = "nameAge",required = false) String nameAge,@RequestParam("age") int age,HttpServletRequest request) throws Exception {
         String methodValue = request.getContextPath();
         HttpSession header = request.getSession();
@@ -85,6 +109,7 @@ public class BookController {
      * @return
      */
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
+    @ApiOperation(value = "线程测试案列")
     public Integer insertSelective(@RequestBody List<Book> book) {
         return bookService.insertSelective(book);
     }
@@ -116,6 +141,7 @@ public class BookController {
      * @return
      */
     @PostMapping(value = "/loadSendSign")
+    @ApiOperation(value = "导入数据")
     public String loadSendSign(@RequestBody MultipartFile file) {
         InputStream inputStream = null;
         try {
@@ -147,6 +173,7 @@ public class BookController {
      * @param response
      */
     @GetMapping(value = "/downloadExcel")
+    @ApiOperation(value = "导出 模板")
     public void downloadExcel(HttpServletRequest request, HttpServletResponse response){
         response.reset();
         response.setContentType("application/x-msdownload; charset=GBK");
@@ -187,6 +214,7 @@ public class BookController {
      * @throws Exception
      */
     @GetMapping("/export")
+    @ApiOperation(value = "导出模板数据")
     public void export(
                        @RequestParam("year") Integer year,
                        @RequestParam("name") String name,
@@ -269,5 +297,19 @@ public class BookController {
                 log.debug("导出失败：{}",e.getMessage());
             }
         }
+    }
+
+    @RequestMapping("/toIndex")
+    public ModelAndView toindex(){
+        ModelAndView ad=new ModelAndView();
+        ad.setViewName("index");
+        return ad;
+    }
+
+    @RequestMapping("/add")
+    public ModelAndView add(){
+        ModelAndView ad=new ModelAndView();
+        ad.setViewName("add");
+        return ad;
     }
 }

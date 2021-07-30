@@ -82,6 +82,17 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+# Swagger界面内容配置
+swagger:
+  title: XBoot API接口文档
+  description: XBoot Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: http://demomysql.mark.cn
+  contact:
+    name: mark
+    url: http://blog.mark.cn
+    email: 2408032134@qq.com
+
 #mybatis-plus配置
 mybatis-plus:
   configuration:
