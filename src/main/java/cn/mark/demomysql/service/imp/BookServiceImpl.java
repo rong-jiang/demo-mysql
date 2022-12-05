@@ -4,10 +4,14 @@ import cn.mark.demomysql.mapper.BookMapper;
 import cn.mark.demomysql.model.Book;
 import cn.mark.demomysql.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import javax.validation.constraints.Max;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 //public class BookServiceImpl extends ServiceImpl<BookMapper,Book> implements BookService {
@@ -29,11 +33,11 @@ public class BookServiceImpl  implements BookService {
         return 1;
     }
 
-    @Cacheable(cacheNames = "bookRedis",key = "'t_book_'+#id")
+    @Cacheable(value ={"bookRedisAge01"},key = "#root.args[0]")
     @Override
-    public Book queryList(int id) {
-//        return bookMapper.selectById(id);
-        return null;
+    public Book selectById(Integer id) {
+        Map map=new HashMap();
+        return bookMapper.selectById(id);
     }
 
     @Override
@@ -47,12 +51,34 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
+    public List<Book> queryListBook(Book book) throws Exception {
+        return bookMapper.queryListBook(book);
+    }
+
+    @Override
 //    ,condition = "'select * from t_book where id ='+#id+'and age ='+#age"
-//    @Cacheable(value = "bookRedisAge")
+    @Cacheable(value = "bookRedisAge01")
     public List<Book> listBookAge(int age) {
         Book book=new Book();
         book.setAge(age);
         return bookMapper.listBook(book);
+    }
+
+    @Override
+    public Integer deleteBook(int id) {
+        return bookMapper.deleteBook(id);
+    }
+
+    @CachePut(value ={"bookRedisAge01"},key ="#book.id")
+    @Override
+    public Integer updateBook(Book book) {
+        return bookMapper.updateBook(book);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryMap(Map<String, Object> map) {
+        map.put("setb","男");
+        return bookMapper.selectMaps(map);
     }
 
 

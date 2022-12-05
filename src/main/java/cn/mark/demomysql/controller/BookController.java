@@ -4,10 +4,8 @@ import cn.mark.demomysql.model.Book;
 import cn.mark.demomysql.service.BookService;
 import cn.mark.demomysql.ulit.UploadSendListener;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -17,10 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -44,17 +39,20 @@ public class BookController {
     private BookService bookService;
 
 
+    @Value("${server.port}")
+    private String test01;
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value = "测试")
+    @ApiOperation(value = "测试(调用yml中的值)")
     public String sayHello() {
-        return "Hello, World!";
+        return "Hello, World!"+test01+"来了";
     }
 
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "添加")
-    public String addBook(Book book){
+    public String addBook(@RequestBody  Book book){
         int insert = bookService.insert(book);
         if (insert>0){
             return "添加成功";
@@ -64,13 +62,38 @@ public class BookController {
     }
 
 
-    @RequestMapping(value = "/queryBook", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "删除")
+    public int deleteBook(@RequestBody Book book){
+        int insert = bookService.deleteBook(book.getId());
+        if (insert>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    @RequestMapping(value = "/updateBook", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "修改")
+    public int updateBook(@RequestBody Book book){
+        int insert = bookService.updateBook(book);
+        if (insert>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+
+
+    @RequestMapping(value = "/queryBookById", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "根据id查询")
-    public Book queryBook(@RequestParam("id") int id) {
-//        Book book=new Book();
-//        book.setId(1);
-        return bookService.queryList(id);
+    public Book queryBookById(@RequestBody Book book) {
+//    public Book queryBookById(@RequestParam("id") Integer id) {
+        return bookService.selectById(book.getId());
     }
 
     @RequestMapping(value = "/queryList", method = RequestMethod.GET)
@@ -80,10 +103,40 @@ public class BookController {
         return bookService.listBook(id, age);
     }
 
+    @RequestMapping(value = "/queryMap", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "Map条件查询")
+    public List<Book> queryMap() throws Exception {
+        Map map=new HashMap();
+        return bookService.queryMap(map);
+    }
+
+    /**
+     * 根据年龄查询数据
+     * @param age
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/addTest01", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "根据年龄查询数据(缓存)")
+    public List<Book> addTest01(@RequestParam("age") int age) throws Exception {
+        return  bookService.listBookAge(age);
+    }
+
+    @RequestMapping(value = "/queryListBook", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "查询")
+    public List<Book> queryListBook() throws Exception {
+        System.out.println("有反应吗!!!!!!!!!!!!!!!!!!!!!!1");
+        Book book=new Book();
+        return bookService.queryListBook(book);
+    }
+
 
     @RequestMapping(value = "/queryListAge", method = RequestMethod.GET)
     @ApiOperation(value = "测试条件查询")
-    public List<Book> queryListAge( @RequestParam(value = "nameAge",required = false) String nameAge,@RequestParam("age") int age,HttpServletRequest request) throws Exception {
+    public List<Book> queryListAge ( @RequestParam(value = "nameAge",required = false) String nameAge,@RequestParam("age") int age,HttpServletRequest request)throws Exception {
         String methodValue = request.getContextPath();
         HttpSession header = request.getSession();
         String servletContext = header.getId();
@@ -104,23 +157,37 @@ public class BookController {
     }
 
     /**
-     * 线程测试案列
+     * 线程测试案列（不成立）
      * @param book
      * @return
      */
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
-    @ApiOperation(value = "线程测试案列")
+    @ApiOperation(value = "线程测试案列（不成立）")
     public Integer insertSelective(@RequestBody List<Book> book) {
         return bookService.insertSelective(book);
     }
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * 线程测试更具有年龄查询数据
+     * @param age
+     * @throws Exception
+     */
+    @RequestMapping("/addTest")
+    @ApiOperation(value = "线程测试根据有年龄查询数据")
+    public  void addTest(@RequestParam("age") int age) throws Exception {
         Thread thread0 = new Thread(() -> {
             try {
+                log.info("等我20秒xdm................");
+//                addTest01(age);
+                List<Book> books = bookService.listBookAge(age);
+                //  List<Book> books = bookService.listBook(1, age);
+                System.out.println("rides数据"+books);
                 System.out.println(new Date() + "\t" + Thread.currentThread().getName() + "\t太困了，让我睡10秒，中间有事叫我，zZZ。。。");
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
                 System.out.println(new Date() + "\t" + Thread.currentThread().getName() + "\t被叫醒了，又要继续干活了");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
         thread0.start();
@@ -133,6 +200,7 @@ public class BookController {
             // 无需获取锁就可以调用interrupt
             thread0.interrupt();
         }).start();
+
     }
 
     /**

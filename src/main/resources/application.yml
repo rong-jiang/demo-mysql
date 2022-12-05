@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8089
   servlet:
     context-path: /book
 
@@ -82,7 +82,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-# Swagger界面内容配置
+# Swagger界面内容配置 （浏览地址：http://127.0.0.1:8080/book/swagger-ui.html#）
 swagger:
   title: XBoot API接口文档
   description: XBoot Api Documentation

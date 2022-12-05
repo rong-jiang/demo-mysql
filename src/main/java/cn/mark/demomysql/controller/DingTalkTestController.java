@@ -1,5 +1,6 @@
 package cn.mark.demomysql.controller;
 
+import cn.mark.demomysql.model.Book;
 import cn.mark.demomysql.ulit.HttpUtils;
 import com.alibaba.fastjson.JSON;
 
@@ -26,7 +27,7 @@ import java.util.Map;
 @Configuration
 @EnableScheduling
 public class DingTalkTestController {
-    @Scheduled(cron = "*/10 * * * * ?")
+    //@Scheduled(cron = "*/10 * * * * ?")
     public static void DingTalkTest() {
         try {
             //业务实现

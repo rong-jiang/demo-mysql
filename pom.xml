@@ -12,6 +12,8 @@
     <artifactId>demo-mysql</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo-mysql</name>
+    <!-- 打成war包   -->
+    <!--<packaging>war</packaging>-->
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
@@ -26,6 +28,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!--  去除内置Tomcat (用Tomcat发布)      -->
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -209,6 +218,12 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- Gson -->
         <!--<dependency>
             <groupId>com.google.code.gson</groupId>
@@ -229,7 +244,7 @@
             </resource>
             <!--解决mybatis-generator-maven-plugin运行时没有将jdbc.properites文件放入target文件夹的问题-->
             <!--mybatis-generator自动生成 运行maven时开启-->
-            <!--<resource>
+           <!-- <resource>
             <directory>src/main/resources</directory>
             <includes>
             <include>*.properties</include>
