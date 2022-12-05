@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 //@RunWith(SpringRunner.class)
@@ -16,6 +17,7 @@ class DemoMysqlApplicationTests {
 
 	@Test
 	void contextLoads() {
+		testPost();
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException {
@@ -76,5 +78,16 @@ class DemoMysqlApplicationTests {
 
     }
 
+	//    java 将 list 字符串用逗号隔开拼接字符串的多种方法
+	@Test
+	public static void StringOut() {
+		List<String> list=new ArrayList<>();
+		list.add("aaa");
+		list.add("bbb");
+		list.add("ccc");
+
+		String result = list.stream().map(String::valueOf).collect(Collectors.joining(","));
+		System.out.println(result);
+	}
 
 }
