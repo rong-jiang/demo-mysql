@@ -12,7 +12,7 @@
     <artifactId>demo-mysql</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo-mysql</name>
-    <!-- 打成war包-->
+    <!-- 这里打成war包-->
     <!--<packaging>war</packaging>-->
     <description>Demo project for Spring Boot</description>
     <properties>
