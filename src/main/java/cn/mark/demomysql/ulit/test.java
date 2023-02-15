@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class test {
-
     //冒泡排序
    /* public static void main(String[] args) {
         int[] sum = {25, 65, 5, 10, 80};
@@ -31,19 +30,34 @@ public class test {
         return sum;
     }*/
 
-    //冒泡排序
+    //排序
     public static void main(String[] args) {
         int t = 0;
         int[] sum = {25, 65, 5, 10, 80};
-        for (int i = 0; i < sum.length - 1; i++) {
-            for (int j = 0; j < sum.length - 1 - i; j++) {
-                if (sum[j + 1] < sum[j]) {
-                    t = sum[j];
-                    sum[j] = sum[j + 1];
-                    sum[j + 1] = t;
+        //插入排序(快（2倍）)
+        for (int i =1; i < sum.length; i++) {//从第二个开始 每次拿一个
+            System.out.println("第"+i+"次");
+            for (int j = i; j>0 ; j--) {//找到一个合适的位子插进去（当前位子和前面的那些数字比较）
+                if (sum[j]<sum[j-1]){
+                    t=sum[j];
+                    sum[j]=sum[j-1];
+                    sum[j-1]=t;
+
                 }
+                System.out.println(Arrays.toString(sum));
             }
         }
+        //冒泡排序(慢)
+//        for (int i = 0; i < sum.length - 1; i++) {
+//            for (int j = 0; j < sum.length - 1 - i; j++) {
+//                if (sum[j + 1] < sum[j]) {
+//                    t = sum[j];
+//                    sum[j] = sum[j + 1];
+//                    sum[j + 1] = t;
+//                }
+//            }
+//        }
+        System.out.println("=========================");
         System.out.println(Arrays.toString((sum)));
 
     /*Scanner scanner=new Scanner(System.in);
@@ -122,6 +136,9 @@ public class test {
         System.out.println(append);
         s2= String.valueOf(append);
         System.out.println(s2);
+
+        testdemo1 testdemo1=new testdemo1();
+        System.out.println(testdemo1.testd());
 
     }
 

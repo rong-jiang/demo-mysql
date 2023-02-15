@@ -1,6 +1,7 @@
 package cn.mark.demomysql.service;
 
 import cn.mark.demomysql.model.Book;
+import com.github.pagehelper.PageInfo;
 import org.springframework.data.repository.query.Param;
 
 import javax.validation.constraints.Max;
@@ -19,6 +20,8 @@ public interface BookService {
 
     List<Book> queryListBook(Book book) throws Exception;
 
+    PageInfo<List<Book>> queryListBookAll(Integer pageNum, Integer pageSize) throws Exception;
+
     List<Book> listBookAge(int age) throws Exception;
 
     Integer deleteBook(int id);
@@ -26,4 +29,6 @@ public interface BookService {
     Integer updateBook(Book book);
 
     List<Map<String,Object>> queryMap(Map<String,Object> map);
+
+    String testBookUser();
 }

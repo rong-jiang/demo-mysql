@@ -3,6 +3,7 @@ package cn.mark.demomysql.mapper;
 import cn.mark.demomysql.model.Book;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public interface BookMapper  {
     Book selectById(Integer id);
 
     List<Book> queryListBook(Book book);
+
+    @Select("select * from t_book")
+    List<Book> queryListBookAll();
 
     Integer deleteBook(int id);
 

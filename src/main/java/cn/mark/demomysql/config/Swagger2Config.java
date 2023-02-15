@@ -1,4 +1,4 @@
-package cn.mark.demomysql.ulit;
+package cn.mark.demomysql.config;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

@@ -2,10 +2,34 @@ package cn.mark.demomysql.ulit;
 
 
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class testdemo1 {
+    public static final String TEXTBOOK = "UTF-8";
+
+    public String testa (){
+        return "testa";
+    }
+
+    public static String testb(){
+        return "testb";
+    }
+
+    private String testc(){
+        return "testc";
+    }
+    protected String testd(){
+        return "testd";
+    }
+
+
 
     public static void main(String[] args) {
+        String s =testdemo1.TEXTBOOK;
+        System.out.println("常量:"+s);
+        System.out.println("==============");
         List list=new ArrayList();
         list.add(1);
         list.add(12);
@@ -65,6 +89,28 @@ public class testdemo1 {
         list2.forEach(lista ->{
             System.out.println(lista);
         });
+
+        System.out.println("=========================");
+
+        Callable callable=()->{
+            int i = new Random().nextInt(100);
+            System.out.println(i+"     ss");
+            Thread.sleep(3000);
+            return i;
+        };
+
+        FutureTask futureTask = new FutureTask(callable);
+
+        Thread thread = new Thread(futureTask);
+        thread.start();
+
+        try {
+            System.out.println("得到的结果："+futureTask.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
     }

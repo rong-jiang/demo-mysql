@@ -2,8 +2,10 @@ package cn.mark.demomysql.controller;
 
 import cn.mark.demomysql.model.Book;
 import cn.mark.demomysql.service.BookService;
+import cn.mark.demomysql.service.UserService;
 import cn.mark.demomysql.ulit.UploadSendListener;
 import com.alibaba.excel.EasyExcel;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 @RestController
 @Slf4j
@@ -59,6 +63,13 @@ public class BookController {
         }else{
             return "添加失败";
         }
+    }
+
+    @RequestMapping(value = "/testBookTest", method = RequestMethod.POST)
+    @ApiOperation(value = "test事物")
+    public String testBookTest(){
+        String s = bookService.testBookUser();
+        return s;
     }
 
 
@@ -128,9 +139,34 @@ public class BookController {
     @ResponseBody
     @ApiOperation(value = "查询")
     public List<Book> queryListBook() throws Exception {
-        System.out.println("有反应吗!!!!!!!!!!!!!!!!!!!!!!1");
         Book book=new Book();
-        return bookService.queryListBook(book);
+        long start = System.currentTimeMillis();
+        List<Book> books = bookService.queryListBook(book);
+        long end = System.currentTimeMillis();
+        System.out.println("运算时间:"+(end-start)+"ms");
+        return books;
+    }
+
+
+    @RequestMapping(value = "/queryListBookAll", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "分页条件查询所有数据")
+    public PageInfo<List<Book>> queryListBookAll(@RequestParam(defaultValue = "1") Integer pageNum,
+                                       @RequestParam(defaultValue = "5") Integer pageSize//设置默认页面大小为5
+                                       ) throws Exception {
+
+        //为了程序的严谨性，判断非空：
+        if(pageNum == null){//若pageNum为空
+            pageNum = 1;   //设置默认当前页为1
+        }
+        if(pageNum <= 0){  //若为负数
+            pageNum = 1;   //设置默认值为1
+        }
+        if(pageSize == null){ //若页面大小为空
+            pageSize = 5;    //设置默认每页显示的数据数
+        }
+        PageInfo<List<Book>> listPageInfo = bookService.queryListBookAll(pageNum, pageSize);
+        return listPageInfo;
     }
 
 

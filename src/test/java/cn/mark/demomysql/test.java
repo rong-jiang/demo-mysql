@@ -3,11 +3,12 @@ package cn.mark.demomysql;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
+
 
 public class test {
     //    java 将 list 字符串用逗号隔开拼接字符串的多种方法
@@ -71,13 +72,31 @@ public class test {
     //java中关于数组去重 方法一：用Set集合进行去重
     public static void main(String[] args) {
         String[] test = {"A","B","B","B","D","E","E","E","A"};
-        List<String> result = new ArrayList<>();
         Set<String> settest=new HashSet<String>();
         for(int i=1;i<test.length;i++){
-            result.add(test[i]);
+//            result.add(test[i]);
+            settest.add(test[i]);
         }
-        settest.addAll(result);
         System.out.println(settest);
+
+        long start = System.currentTimeMillis();
+        Date date = new Date();
+        long time = date.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(time);
+        System.out.println(format);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10000; i++) {
+                    System.out.println("测试："+i);
+                }
+            }
+        }).start();
+        long end = System.currentTimeMillis();
+        System.out.println("时间:"+(end-start));
+
+
     }
 }
 

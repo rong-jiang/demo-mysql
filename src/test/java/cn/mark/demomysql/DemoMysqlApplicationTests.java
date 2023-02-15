@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @SpringBootTest
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 class DemoMysqlApplicationTests {
 
 	@Test

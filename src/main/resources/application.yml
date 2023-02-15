@@ -81,6 +81,9 @@ mybatis:
   #驼峰命名
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 
 # Swagger界面内容配置 （浏览地址：http://127.0.0.1:8080/book/swagger-ui.html#）
 swagger:

@@ -70,4 +70,14 @@ public class Book implements Serializable{
 
         this.setb = setb;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", setb='" + setb + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

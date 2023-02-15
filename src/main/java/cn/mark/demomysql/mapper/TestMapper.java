@@ -1,7 +1,9 @@
 package cn.mark.demomysql.mapper;
 
 import cn.mark.demomysql.model.Test;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface TestMapper {
     int deleteByPrimaryKey(Integer testId);
 
